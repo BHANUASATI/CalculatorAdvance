@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtraction Calculator</title>
+    <style>
+        /* Body and container styles */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(255, 99, 71, 0.8), rgba(70, 130, 180, 0.8)); /* RGB gradient */
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s ease-in-out;
+            overflow: hidden; /* Prevents body overflow */
+        }
+
+        h1 {
+            color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            animation: slideDown 1s ease-in-out;
+            overflow-y: auto; /* Enables vertical scrolling */
+            max-height: 90vh; /* Limits the height of the container */
+        }
+
+        .datalist-box {
+            background: rgba(0, 0, 0, 0.7); /* Dark transparent background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: zoomIn 0.8s ease-in-out;
+            overflow: hidden; /* Prevents overflow in the box */
+        }
+
+        /* Input and button styles */
+        input[type="number"] {
+            width: 100%;
+            max-width: 100%; /* Ensures input doesn't exceed its container */
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 2px solid #00ffcc;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #00ffcc;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+
+        button {
+            width: 100%;
+            max-width: 100%; /* Ensures button doesn't exceed its container */
+            padding: 12px;
+            background-color: #00ccff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 10px;
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #0099cc;
+            transform: translateY(-2px);
+        }
+
+        #result {
+            color: #fff;
+            font-size: 18px;
+            margin-top: 20px;
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95%;
+                max-width: 500px;
+            }
+
+            .datalist-box {
+                padding: 15px;
+            }
+
+            input[type="number"] {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            #result {
+                font-size: 16px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 100%;
+                max-width: none;
+                padding: 10px;
+            }
+
+            .datalist-box {
+                padding: 10px;
+            }
+
+            input[type="number"] {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            button {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            #result {
+                font-size: 14px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Subtraction Calculator</h1>
+    <div class="datalist-box">
+        <!-- Container for dynamic input fields -->
+        <div id="inputContainer">
+            <input type="number" class="numberInput" placeholder="Enter a number" />
+        </div>
+        <button id="addBtn">-</button>
+        <button id="calculateBtn">Calculate Subtraction</button>
+        <button id="resetBtn">Reset</button>
+        <p id="result"></p>
+    </div>
+</div>
+
+<script>
+    function addInputField() {
+        // Create a new input element for additional numbers
+        const newInput = document.createElement('input');
+        newInput.type = 'number';
+        newInput.className = 'numberInput';
+        newInput.placeholder = 'Enter a number';
+        
+        // Append the new input element to the container
+        const inputContainer = document.getElementById('inputContainer');
+        inputContainer.appendChild(newInput);
+
+        // Scroll to the newly added input element
+        newInput.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+        // Focus on the newly added input element
+        newInput.focus();
+
+        // Add animation to the new input element
+        newInput.style.animation = 'fadeInUp 0.8s ease-in-out';
+    }
+
+    document.getElementById('addBtn').addEventListener('click', addInputField);
+
+    document.getElementById('calculateBtn').addEventListener('click', function() {
+        const inputs = document.querySelectorAll('.numberInput');
+        let result = parseFloat(inputs[0].value) || 0;
+        
+        // Iterate through all input fields starting from the second one and subtract the values
+        for (let i = 1; i < inputs.length; i++) {
+            const value = parseFloat(inputs[i].value);
+            if (!isNaN(value)) {
+                result -= value;
+            }
+        }
+        
+        // Display the result
+        document.getElementById('result').innerText = `Result: ${result}`;
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        // Clear all input fields
+        document.getElementById('inputContainer').innerHTML = '<input type="number" class="numberInput" placeholder="Enter a number" />';
+        // Clear the result
+        document.getElementById('result').innerText = '';
+    });
+
+    document.addEventListener('keydown', function(event) {
+        // Check if the key pressed is the "-" key
+        if (event.key === '-') {
+            event.preventDefault(); // Prevent the default action of the "-" key
+            addInputField(); // Call the function to add a new input field
+        }
+        // Check if the key pressed is the Enter key
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent the default action of the Enter key (e.g., form submission)
+            document.getElementById('calculateBtn').click(); // Trigger the Calculate Subtraction button
+        }
+    });
+</script>
+</body>
+</html>
